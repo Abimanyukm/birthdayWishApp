@@ -18,13 +18,13 @@ export class Landing {
   dob: string = '2000-01-01';
   alertMessage: string = '';
   showAlert: boolean = false;
-
   constructor(
     private router: Router,
-    private dateAccessService: DateAccessService
-  ) {}
+    private dateAccessService: DateAccessService, private service: DateAccessService
+  ) { }
 
   checkDob(): void {
+    const timestamp = new Date().toISOString();
     if (this.dob === '2000-08-26') {
       this.dateAccessService.setDateMatched(true);
 
@@ -36,8 +36,14 @@ export class Landing {
         event_category: 'authentication',
         event_label: 'DOB Matched',
         value: 1,
-        entered_dob: this.dob
+        entered_dob: this.dob,
+        client_timestamp_dob_match: timestamp
+
       });
+      this.service.sendTelegramAlert(
+        'dob_auth_success',
+        timestamp
+      );
 
       setTimeout(() => {
         this.router.navigate(['/wish']);
@@ -48,14 +54,21 @@ export class Landing {
 
       this.alertMessage = 'You forget that too, really??? 💭';
       this.showAlert = true;
-
       // 🔥 GA event for failed DOB auth (mismatch)
       gtag('event', 'dob_auth_failed', {
         event_category: 'authentication',
         event_label: 'DOB Mismatch',
         value: 0,
-        entered_dob: this.dob
+        entered_dob: this.dob,
+        client_timestamp_dob_missmatch: timestamp
       });
+      this.dateAccessService.sendTelegramAlert(
+  'dob_auth_failed',
+  timestamp,
+  {
+    entered_dob: this.dob
+  }
+);
     }
   }
 

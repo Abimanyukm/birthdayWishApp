@@ -11,7 +11,7 @@ Despite the flaws we had, I hope you’ll one day realize the value of what we s
   </header>
 
   <div class="carousel-wrap">
-    <div class="carousel" #carouselRef>
+    <div class="carousel" #carouselRef (scroll)="updateActiveIndex()">
       <div class="slide" *ngFor="let img of images; let i = index">
         <div class="slide-card">
           <img [src]="img.src" [alt]="'Memory ' + (i + 1)" />

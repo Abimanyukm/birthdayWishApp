@@ -4,8 +4,11 @@ import {
   ViewChild,
   AfterViewInit,
   OnDestroy,
+  inject,
 } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { timestamp } from 'rxjs';
+import { DateAccessService } from '../services/date-access.service';
 
 // ✅ Declare GA globally
 declare var gtag: Function;
@@ -25,6 +28,7 @@ interface StoryImage {
 export class Ourstory implements AfterViewInit, OnDestroy {
   @ViewChild('carouselRef') carouselRef!: ElementRef<HTMLDivElement>;
   @ViewChild('storyAudio') storyAudio!: ElementRef<HTMLAudioElement>;
+  private service = inject(DateAccessService);
 
   images: StoryImage[] = Array.from({ length: 16 }, (_, i) => ({
     src: `images/story${i + 1}.png`,
@@ -36,7 +40,7 @@ export class Ourstory implements AfterViewInit, OnDestroy {
   audioStarted = false;
   showAudioPopup = true; // show popup on load
 
-  ngAfterViewInit(): void {}
+  ngAfterViewInit(): void { }
 
   ngOnDestroy(): void {
     if (this.scrollTimeout) clearTimeout(this.scrollTimeout);
@@ -55,6 +59,8 @@ export class Ourstory implements AfterViewInit, OnDestroy {
   }
 
   startAudio(): void {
+    const timestamp = new Date().toISOString();
+
     const audioEl = this.storyAudio?.nativeElement;
     if (!audioEl || this.audioStarted) return;
 
@@ -67,7 +73,8 @@ export class Ourstory implements AfterViewInit, OnDestroy {
         gtag('event', 'audio_started', {
           event_category: 'interaction',
           event_label: 'Story Audio Played',
-          value: 1
+          value: 1,
+          audio_play_time: timestamp
         });
       })
       .catch(err => {
@@ -75,7 +82,9 @@ export class Ourstory implements AfterViewInit, OnDestroy {
       });
   }
 
-  private updateActiveIndex(): void {
+  updateActiveIndex(): void {
+    const timestamp = new Date().toISOString();
+
     const el = this.carouselRef?.nativeElement;
     if (!el) return;
     const slideWidth = el.scrollWidth / this.images.length;
@@ -89,8 +98,16 @@ export class Ourstory implements AfterViewInit, OnDestroy {
       gtag('event', 'image_scrolled', {
         event_category: 'interaction',
         event_label: `Scrolled to image ${this.activeIndex + 1}`,
-        value: this.activeIndex + 1
+        value: this.activeIndex + 1,
+        image_scroll_time: timestamp
       });
+      this.service.sendTelegramAlert(
+        'image_scrolled',
+        timestamp,
+        {
+          image: this.activeIndex + 1
+        }
+      );
     }
   }
 
@@ -116,6 +133,8 @@ export class Ourstory implements AfterViewInit, OnDestroy {
   }
 
   async downloadImage(src: string, filename: string): Promise<void> {
+    const timestamp = new Date().toISOString();
+
     try {
       const response = await fetch(src);
       const blob = await response.blob();
@@ -132,8 +151,18 @@ export class Ourstory implements AfterViewInit, OnDestroy {
       gtag('event', 'image_download', {
         event_category: 'interaction',
         event_label: filename,
-        value: 1
+        value: 1,
+        img_download_time: timestamp
+
       });
+      this.service.sendTelegramAlert(
+        'image_download',
+        timestamp,
+        {
+          filename: filename
+        }
+      );
+
     } catch {
       window.open(src, '_blank');
     }

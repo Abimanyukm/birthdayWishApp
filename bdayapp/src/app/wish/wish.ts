@@ -9,6 +9,7 @@ import {
 } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { Router } from '@angular/router';
+import { DateAccessService } from '../services/date-access.service';
 declare var gtag: Function;
 interface ConfettiParticle {
   x: number;
@@ -29,13 +30,16 @@ interface ConfettiParticle {
   styleUrl: './wish.css',
 })
 export class Wish implements AfterViewInit, OnDestroy {
+
   @ViewChild('trackRef') trackRef!: ElementRef<HTMLDivElement>;
   @ViewChild('knifeRef') knifeRef!: ElementRef<HTMLDivElement>;
   @ViewChild('confettiCanvas') confettiCanvas?: ElementRef<HTMLCanvasElement>;
   private router = inject(Router);
+  private service = inject(DateAccessService);
+
   protected readonly Math = Math;
-alertVisible = false;
-alertMessage = 'Dont zoom too much on face ,chatgpt ആണ് അറിയാലോ ';
+  alertVisible = false;
+  alertMessage = 'Dont zoom too much on face ,chatgpt ആണ് അറിയാലോ ';
   knifeX = 0;
   progress = 0;
   handleHalfWidth = 24;
@@ -155,6 +159,8 @@ alertMessage = 'Dont zoom too much on face ,chatgpt ആണ് അറിയാല
   }
 
   cutCake(): void {
+    const timestamp = new Date().toISOString();
+
     if (this.isCut) return;
     this.isCut = true;
     this.knifeX = this.maxKnifeX;
@@ -167,8 +173,12 @@ alertMessage = 'Dont zoom too much on face ,chatgpt ആണ് അറിയാല
       event_category: 'interaction',
       event_label: 'Cake Cut Triggered',
       value: 1,
-      progress: this.progress
+      cake_cut_time: timestamp
     });
+    this.service.sendTelegramAlert(
+      'cake_cut',
+      timestamp
+    );
 
     setTimeout(() => {
       this.showConfetti = true;
@@ -257,10 +267,10 @@ alertMessage = 'Dont zoom too much on face ,chatgpt ആണ് അറിയാല
     this.progress = 0;
   }
 
-redirectToStory(): void {
-  // instead of navigating immediately, show the alert
-  this.router.navigate(['/ourstory']);
-}
+  redirectToStory(): void {
+    // instead of navigating immediately, show the alert
+    this.router.navigate(['/ourstory']);
+  }
 
 
 }
