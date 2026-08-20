@@ -1,0 +1,262 @@
+/* landing.css */
+
+* {
+  box-sizing: border-box;
+}
+
+.page {
+  position: relative;
+  min-height: 100vh;
+  width: 100%;
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+
+  padding: 24px;
+  overflow: hidden;
+
+  background: linear-gradient(
+    135deg,
+    #ffdde1 0%,
+    #ff9a9e 45%,
+    #fecfef 100%
+  );
+
+  font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+}
+
+
+
+/* Card */
+.card {
+  position: relative;
+  z-index: 1;
+  width: 100%;
+  max-width: 420px;
+  padding: 40px 32px;
+  background: rgba(255, 255, 255, 0.55);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1px solid rgba(255, 255, 255, 0.6);
+  border-radius: 24px;
+  box-shadow: 0 20px 45px rgba(214, 51, 108, 0.25);
+  text-align: center;
+  animation: cardIn 0.7s ease-out;
+}
+
+@keyframes cardIn {
+  from { opacity: 0; transform: translateY(24px) scale(0.97); }
+  to   { opacity: 1; transform: translateY(0) scale(1); }
+}
+
+.eyebrow {
+  margin: 0 0 6px;
+  font-size: 13px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: #b23a5e;
+  font-weight: 600;
+}
+
+h2 {
+  margin: 0 0 6px;
+  font-family: 'Georgia', 'Times New Roman', serif;
+  font-size: 28px;
+  color: #6b1e3c;
+  font-weight: 700;
+}
+
+.subtitle {
+  margin: 0 0 28px;
+  font-size: 14px;
+  color: #7a3b52;
+}
+
+.input-wrap {
+  margin-bottom: 20px;
+}
+
+input {
+  width: 100%;
+  padding: 14px 16px;
+  font-size: 16px;
+  border: 2px solid rgba(214, 51, 108, 0.25);
+  border-radius: 14px;
+  background: rgba(255, 255, 255, 0.75);
+  color: #5a1f35;
+  text-align: center;
+  letter-spacing: 0.03em;
+  outline: none;
+  transition: border-color 0.25s ease, box-shadow 0.25s ease, transform 0.15s ease;
+}
+
+input::placeholder {
+  color: #c67f96;
+}
+
+input:focus {
+  border-color: #d6336c;
+  box-shadow: 0 0 0 4px rgba(214, 51, 108, 0.15);
+  transform: translateY(-1px);
+}
+
+/* Style the native date input to match the theme */
+input[type='date'] {
+  font-family: inherit;
+  color: #5a1f35;
+}
+
+input[type='date']::-webkit-calendar-picker-indicator {
+  cursor: pointer;
+  padding: 4px;
+  margin-left: 6px;
+  border-radius: 8px;
+  filter: invert(28%) sepia(54%) saturate(1837%) hue-rotate(313deg)
+    brightness(92%) contrast(92%);
+  transition: background 0.2s ease;
+}
+
+input[type='date']::-webkit-calendar-picker-indicator:hover {
+  background: rgba(214, 51, 108, 0.1);
+}
+
+button {
+  width: 100%;
+  padding: 14px 16px;
+  font-size: 16px;
+  font-weight: 600;
+  color: #fff;
+  background: linear-gradient(135deg, #ff6f91, #d6336c);
+  border: none;
+  border-radius: 14px;
+  cursor: pointer;
+  letter-spacing: 0.02em;
+  box-shadow: 0 10px 25px rgba(214, 51, 108, 0.35);
+  transition: transform 0.15s ease, box-shadow 0.15s ease, filter 0.15s ease;
+}
+
+button:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 14px 30px rgba(214, 51, 108, 0.45);
+  filter: brightness(1.05);
+}
+
+button:active {
+  transform: translateY(0);
+  box-shadow: 0 6px 16px rgba(214, 51, 108, 0.35);
+}
+
+.footnote {
+  margin: 22px 0 0;
+  font-size: 12px;
+  color: #a9536e;
+}
+
+/* Responsive tweaks */
+@media (max-width: 480px) {
+  .card {
+    padding: 32px 22px;
+    border-radius: 20px;
+  }
+
+  h2 {
+    font-size: 23px;
+  }
+
+  .subtitle {
+    font-size: 13px;
+    margin-bottom: 22px;
+  }
+
+  input,
+  button {
+    padding: 13px 14px;
+    font-size: 15px;
+  }
+}
+
+@media (max-width: 360px) {
+  .page {
+    padding: 16px;
+  }
+
+  .card {
+    padding: 26px 18px;
+  }
+
+  h2 {
+    font-size: 21px;
+  }
+}
+/* SEO text styles */
+.seo-heading,
+.seo-subtitle {
+  position: absolute;
+  left: -9999px; /* moves off-screen but still crawlable */
+  height: 1px;
+  width: 1px;
+  overflow: hidden;
+}
+.promise-note {
+  position: relative;
+  z-index: 2;
+
+  width: min(900px, calc(100% - 20px));
+  margin: 0 auto 12px;
+  padding: 12px 20px;
+
+  text-align: center;
+
+  color: #6b1e3c;
+  font-family: Georgia, 'Times New Roman', serif;
+  font-size: 14px;
+  line-height: 1.5;
+
+  background: rgba(255, 255, 255, 0.4);
+  border: 1px solid rgba(255, 255, 255, 0.55);
+  border-radius: 16px;
+
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+
+  box-shadow: 0 8px 25px rgba(214, 51, 108, 0.12);
+}
+
+.promise-note p {
+  margin: 0;
+}
+
+
+.search-highlight {
+  display: inline-block;
+
+  margin: 4px 3px;
+  padding: 4px 11px;
+
+  color: #fff;
+  background: linear-gradient(135deg, #d6336c, #ff4f81);
+
+  font-family: 'Segoe UI', system-ui, sans-serif;
+  font-size: 15px;
+  font-weight: 800;
+  letter-spacing: 0.02em;
+
+  border-radius: 8px;
+
+  box-shadow: 0 5px 15px rgba(214, 51, 108, 0.35);
+
+  animation: searchGlow 2s ease-in-out infinite;
+}
+
+@keyframes searchGlow {
+  0%, 100% {
+    transform: scale(1);
+  }
+
+  50% {
+    transform: scale(1.03);
+    box-shadow: 0 7px 20px rgba(214, 51, 108, 0.5);
+  }
+}

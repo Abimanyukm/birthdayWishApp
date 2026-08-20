@@ -1,0 +1,7 @@
+<div class="overlay" *ngIf="visible" (click)="close()">
+  <div class="popup" (click)="$event.stopPropagation()" role="alertdialog" aria-live="assertive">
+    <div class="icon">!</div>
+    <p>{{ message }}</p>
+    <button (click)="close()">Close</button>
+  </div>
+</div>

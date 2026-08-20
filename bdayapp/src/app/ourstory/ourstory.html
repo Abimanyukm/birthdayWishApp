@@ -1,0 +1,70 @@
+<div class="story-page"(click)="startAudio()">
+
+  <header class="story-header">
+    <h1>So far grateful and sorry from bottom of my heart</h1>
+    <h4>For me, these memories are enough to carry me through the rest of my life, no matter what comes my way. I only hope that, one day, you’ll realize that everyone has flaws, and it’s the willingness to acknowledge and work on them that makes us better.
+
+Despite the flaws we had, I hope you’ll one day realize the value of what we shared. I know “hope” is a word you don’t like, but unfortunately, it’s what keeps me moving forward these days.
+
+    </h4>
+
+  </header>
+
+  <div class="carousel-wrap">
+    <div class="carousel" #carouselRef>
+      <div class="slide" *ngFor="let img of images; let i = index">
+        <div class="slide-card">
+          <img [src]="img.src" [alt]="'Memory ' + (i + 1)" />
+
+          <button type="button" class="download-btn" (click)="downloadImage(img.src, img.filename)"
+            aria-label="Download this photo">
+            <svg viewBox="0 0 24 24" fill="none">
+              <path d="M12 3v12m0 0l-4.5-4.5M12 15l4.5-4.5" stroke="currentColor" stroke-width="2"
+                stroke-linecap="round" stroke-linejoin="round" />
+              <path d="M4 17v2a2 2 0 002 2h12a2 2 0 002-2v-2" stroke="currentColor" stroke-width="2"
+                stroke-linecap="round" stroke-linejoin="round" />
+            </svg>
+          </button>
+
+          <span class="slide-index">{{ i + 1 }} / {{ images.length }}</span>
+        </div>
+      </div>
+    </div>
+
+    <button type="button" class="nav-arrow nav-prev" (click)="scrollByCard(-1)" [class.hidden]="activeIndex === 0"
+      aria-label="Previous photo">
+      <svg viewBox="0 0 24 24" fill="none">
+        <path d="M15 18l-6-6 6-6" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"
+          stroke-linejoin="round" />
+      </svg>
+    </button>
+
+    <button type="button" class="nav-arrow nav-next" (click)="scrollByCard(1)"
+      [class.hidden]="activeIndex === images.length - 1" aria-label="Next photo">
+      <svg viewBox="0 0 24 24" fill="none">
+        <path d="M9 18l6-6-6-6" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"
+          stroke-linejoin="round" />
+      </svg>
+    </button>
+  </div>
+
+  <div class="dots">
+    <button *ngFor="let img of images; let i = index" type="button" class="dot" [class.active]="i === activeIndex"
+      (click)="scrollToIndex(i)" [attr.aria-label]="'Go to photo ' + (i + 1)"></button>
+  </div>
+
+  <p class="hint">Scroll to the end I have a message →</p>
+
+  <!-- Hidden audio element -->
+    <audio #storyAudio src="audio/ourstory.mp3" preload="auto" loop playsinline></audio>
+      <!-- Popup modal -->
+<!-- Popup modal -->
+<div class="audio-popup" *ngIf="showAudioPopup">
+  <div class="popup-content">
+    <p>അതികം മുഖത്തോട്ടു zoom ചെയ്യണ്ട , ചിലതൊക്കെ chatgpt ആണ് </p>
+    <button (click)="confirmAudio(true)">Proceed</button>
+    <button (click)="confirmAudio(true)">Exit</button>
+  </div>
+</div>
+
+</div>

@@ -1,0 +1,830 @@
+* {
+  box-sizing: border-box;
+}
+
+.wish-page {
+  position: relative;
+  min-height: 100vh;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 24px;
+  background: linear-gradient(135deg, #ffe29f 0%, #ffa9c6 45%, #d59bff 100%);
+  font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+  overflow: hidden;
+}
+
+.scene {
+  position: relative;
+  width: 100%;
+  max-width: 360px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.title {
+  margin: 0 0 28px;
+  font-size: 20px;
+  color: #6b1e3c;
+  text-align: center;
+  font-weight: 700;
+}
+
+/* ---------- Knife track ---------- */
+.cake-stage {
+  position: relative;
+  width: 280px;
+}
+
+.knife-track {
+  position: relative;
+  width: 100%;
+  height: 70px;
+  margin-bottom: 6px;
+}
+
+.cut-line {
+  position: absolute;
+  top: 4px;
+  bottom: -12px;
+  width: 3px;
+  background: repeating-linear-gradient(180deg,
+      rgba(107, 30, 60, 0.55) 0 6px,
+      transparent 6px 12px);
+  transition: opacity 0.25s ease;
+  pointer-events: none;
+}
+
+.knife-handle {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 48px;
+  height: 62px;
+  touch-action: none;
+  user-select: none;
+  cursor: grab;
+  outline: none;
+}
+
+.knife-handle:focus-visible .knife {
+  filter: drop-shadow(0 0 0 3px #fff) drop-shadow(0 8px 10px rgba(0, 0, 0, 0.25));
+}
+
+.knife-handle.dragging {
+  cursor: grabbing;
+}
+
+.knife-handle.locked {
+  cursor: default;
+}
+
+.knife {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  transform-origin: 50% 85%;
+  transition: transform 0.35s cubic-bezier(0.34, 1.56, 0.64, 1);
+  filter: drop-shadow(0 8px 10px rgba(0, 0, 0, 0.25));
+}
+
+.knife.tilt {
+  transform: rotate(8deg);
+  transition: none;
+}
+
+.blade {
+  position: absolute;
+  top: 0;
+  left: 6px;
+  width: 36px;
+  height: 34px;
+  background: linear-gradient(135deg, #f4f6f8 0%, #cfd6dc 45%, #aab3ba 100%);
+  clip-path: polygon(0% 0%, 100% 0%, 78% 100%, 0% 78%);
+  border-radius: 2px 6px 2px 2px;
+}
+
+.bolster {
+  position: absolute;
+  top: 30px;
+  left: 4px;
+  width: 12px;
+  height: 8px;
+  background: #7a5a3a;
+  border-radius: 2px;
+}
+
+.handle {
+  position: absolute;
+  top: 36px;
+  left: 2px;
+  width: 16px;
+  height: 26px;
+  background: linear-gradient(180deg, #8a6642 0%, #5f4327 100%);
+  border-radius: 6px;
+}
+
+/* ---------- Cake ---------- */
+.cake-area {
+  position: relative;
+  width: 280px;
+  height: 190px;
+}
+
+.plate {
+  position: absolute;
+  bottom: -14px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 320px;
+  height: 26px;
+  background: radial-gradient(ellipse at center, #ffffff 0%, #e7e7f0 70%, #cfcfe0 100%);
+  border-radius: 50%;
+  box-shadow: 0 8px 14px rgba(0, 0, 0, 0.2);
+}
+
+.candle {
+  position: absolute;
+  top: -34px;
+  left: 50%;
+  margin-left: -5px;
+  width: 10px;
+  height: 34px;
+  z-index: 3;
+  transition: opacity 0.4s ease, transform 0.4s ease;
+}
+
+.candle.out {
+  opacity: 0;
+  transform: translateY(-10px);
+}
+
+.candle .wick {
+  width: 10px;
+  height: 34px;
+  background: repeating-linear-gradient(180deg, #ffd166 0 8px, #ff9f1c 8px 16px);
+  border-radius: 3px;
+}
+
+.candle .flame {
+  position: absolute;
+  top: -16px;
+  left: 1px;
+  width: 8px;
+  height: 16px;
+  background: radial-gradient(circle at 50% 70%, #fff6b0 0%, #ffb703 55%, #fb5607 100%);
+  border-radius: 50% 50% 50% 50% / 60% 60% 40% 40%;
+  animation: flicker 0.6s ease-in-out infinite alternate;
+  box-shadow: 0 0 12px 4px rgba(255, 170, 0, 0.55);
+}
+
+@keyframes flicker {
+  0% {
+    transform: scale(1, 1) rotate(-2deg);
+  }
+
+  100% {
+    transform: scale(0.92, 1.08) rotate(2deg);
+  }
+}
+
+.cake-half {
+  position: absolute;
+  top: 0;
+  height: 100%;
+  width: 50%;
+  overflow: hidden;
+  transition: transform 0.7s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.cake-left {
+  left: 0;
+}
+
+.cake-right {
+  right: 0;
+}
+
+.cake-half.cut.cake-left {
+  transform: translate(-42px, 8px) rotate(-6deg);
+}
+
+.cake-half.cut.cake-right {
+  transform: translate(42px, 8px) rotate(6deg);
+}
+
+.cake-inner {
+  position: absolute;
+  top: 0;
+  width: 200%;
+  height: 100%;
+}
+
+.cake-left .cake-inner {
+  left: 0;
+}
+
+.cake-right .cake-inner {
+  right: 0;
+}
+
+.layer {
+  position: absolute;
+  left: 0;
+  width: 100%;
+  border-radius: 10px;
+}
+
+/* Base cake layers with cream look */
+.layer-base {
+  bottom: 0;
+  height: 80px;
+  background: linear-gradient(180deg, #f5d6ba 0%, #e6b389 100%);
+  border-radius: 16px;
+  box-shadow: inset 0 4px 6px rgba(0, 0, 0, 0.15);
+}
+
+.layer-mid {
+  bottom: 70px;
+  height: 60px;
+  background: linear-gradient(180deg, #fff0e6 0%, #f5c7a9 100%);
+  border-radius: 16px;
+  box-shadow: inset 0 3px 5px rgba(0, 0, 0, 0.1);
+}
+
+.layer-top {
+  bottom: 122px;
+  height: 46px;
+  background: linear-gradient(180deg, #fffaf7 0%, #ffe8d6 100%);
+  border-radius: 16px;
+  box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+/* Frosting border with cream edges */
+.frosting-top {
+  position: absolute;
+  bottom: 118px;
+  left: 0;
+  width: 100%;
+  height: 24px;
+  background: radial-gradient(circle at 50% 30%, #fff 0%, #fdf2f2 70%);
+  border-radius: 20px 20px 12px 12px;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.15);
+  border: 3px solid #fff;
+}
+
+/* Decorative cream edges */
+.cake-area::before {
+  content: "";
+  position: absolute;
+  top: -6px;
+  left: 0;
+  width: 100%;
+  height: 12px;
+  background: repeating-linear-gradient(90deg,
+      #fff 0 12px,
+      #fdf2f2 12px 24px);
+  border-radius: 12px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+/* Sprinkles with pastel colors */
+.sprinkle {
+  position: absolute;
+  bottom: 128px;
+  width: 10px;
+  height: 4px;
+  border-radius: 2px;
+}
+
+.s1 {
+  left: 20%;
+  background: #ffb3c6;
+  transform: rotate(20deg);
+}
+
+.s2 {
+  left: 65%;
+  background: #a3d2ca;
+  transform: rotate(-15deg);
+}
+
+.s3 {
+  left: 30%;
+  background: #f6d743;
+  transform: rotate(10deg);
+}
+
+.s4 {
+  left: 68%;
+  background: #b5ead7;
+  transform: rotate(-25deg);
+}
+
+/* Cream drips */
+.drip {
+  position: absolute;
+  bottom: 96px;
+  width: 18px;
+  height: 26px;
+  border-radius: 0 0 50% 50%;
+  background: #fffaf7;
+  box-shadow: inset 0 -2px 4px rgba(0, 0, 0, 0.1);
+}
+
+
+/* ---------- UI ---------- */
+.hint {
+  margin-top: 16px;
+  font-size: 13px;
+  color: #6b1e3c;
+  font-weight: 600;
+  text-align: center;
+  opacity: 0.85;
+}
+
+.fallback-btn {
+  margin-top: 12px;
+  padding: 8px 16px;
+  font-size: 13px;
+  font-weight: 600;
+  color: #d6336c;
+  background: rgba(255, 255, 255, 0.65);
+  border: 1px solid rgba(214, 51, 108, 0.35);
+  border-radius: 999px;
+  cursor: pointer;
+  transition: background 0.2s ease, transform 0.15s ease;
+}
+
+.fallback-btn:hover {
+  background: rgba(255, 255, 255, 0.85);
+  transform: translateY(-1px);
+}
+
+/* ---------- Overlay & confetti ---------- */
+.confetti-canvas {
+  position: fixed;
+  inset: 0;
+  z-index: 15;
+  pointer-events: none;
+}
+
+.message-overlay {
+  position: fixed;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(107, 30, 60, 0.35);
+  /* backdrop-filter: blur(4px); */
+  z-index: 20;
+  padding: 24px;
+}
+
+.message-card {
+  background: rgba(255, 255, 255, 0.5);
+  padding: 48px 40px;
+  border-radius: 28px;
+  text-align: center;
+  max-width: 460px;
+  box-shadow: 0 25px 50px rgba(107, 30, 60, 0.4);
+  animation: popIn 0.6s cubic-bezier(0.34, 1.56, 0.64, 1);
+  position: relative;
+}
+
+.cake-emoji {
+  font-size: 40px;
+  margin-bottom: 8px;
+}
+
+@keyframes popIn {
+  0% {
+    opacity: 0;
+    transform: scale(0.5) translateY(30px);
+  }
+
+  100% {
+    opacity: 1;
+    transform: scale(1) translateY(0);
+  }
+}
+
+.message-card h1 {
+  margin: 0 0 10px;
+  font-size: 22px;
+  color: #d6336c;
+}
+
+.message-card p {
+  margin: 0;
+  font-size: 15px;
+  color: #7a3b52;
+}
+
+@media (prefers-reduced-motion: reduce) {
+
+  .knife,
+  .cake-half,
+  .message-card {
+    transition: none !important;
+    animation: none !important;
+  }
+}
+
+/* Floating hearts background */
+.floating-hearts {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  z-index: 0;
+}
+
+.bubble {
+  position: absolute;
+  bottom: -448px;
+  width: 235px;
+  height: 235px;
+  animation: floatUp var(--dur, 16s) cubic-bezier(0.4, 0, 0.2, 1) infinite;
+  animation-delay: var(--delay, 0s);
+  will-change: transform, opacity;
+}
+
+.bubble img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  object-position: center;
+  background: rgba(255, 255, 255, 0.85);
+  border-radius: 50%;
+  border: 3px solid rgba(255, 255, 255, 0.7);
+  box-shadow:
+    0 10px 25px rgba(107, 30, 60, 0.28),
+    0 2px 8px rgba(107, 30, 60, 0.15);
+  filter: saturate(1.05);
+}
+
+/* Soft glow burst behind the heart */
+.bubble::before {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(255, 111, 145, 0.55) 0%, rgba(255, 111, 145, 0) 70%);
+  transform: translate(-50%, -50%) scale(0);
+  animation: glowBurst var(--dur, 16s) cubic-bezier(0.4, 0, 0.2, 1) infinite;
+  animation-delay: var(--delay, 0s);
+  pointer-events: none;
+}
+
+/* Heart glyph that pops as the photo fades away */
+.bubble::after {
+  content: '💗';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  font-size: 48px;
+  line-height: 1;
+  transform: translate(-50%, -50%) scale(0);
+  opacity: 0;
+  animation: heartBurst var(--dur, 16s) cubic-bezier(0.4, 0, 0.2, 1) infinite;
+  animation-delay: var(--delay, 0s);
+  filter: drop-shadow(0 4px 10px rgba(214, 51, 108, 0.45));
+  pointer-events: none;
+}
+
+@keyframes floatUp {
+  0% {
+    transform: translate(0, 0) scale(0.85) rotate(0deg);
+    opacity: 0;
+    filter: blur(3px) saturate(1.05);
+  }
+
+  8% {
+    opacity: 0.9;
+    filter: blur(0px) saturate(1.05);
+  }
+
+  50% {
+    transform: translate(calc(var(--drift, 20px) * 0.5), -55vh) scale(1) rotate(4deg);
+  }
+
+  82% {
+    opacity: 0.85;
+    filter: blur(0px) saturate(1.05);
+  }
+
+  91% {
+    transform: translate(var(--drift, 20px), -108vh) scale(0.75) rotate(-3deg);
+    opacity: 0;
+    filter: blur(1px) saturate(1.05);
+  }
+
+  100% {
+    transform: translate(var(--drift, 20px), -115vh) scale(0.6) rotate(-3deg);
+    opacity: 0;
+  }
+}
+
+/* Heart pops right as the photo disappears (matches floatUp's 82%→91% fade-out) */
+@keyframes heartBurst {
+
+  0%,
+  78% {
+    transform: translate(-50%, -50%) scale(0);
+    opacity: 0;
+  }
+
+  84% {
+    transform: translate(-50%, -50%) scale(1.15);
+    opacity: 1;
+  }
+
+  90% {
+    transform: translate(-50%, -70%) scale(1);
+    opacity: 1;
+  }
+
+  100% {
+    transform: translate(-50%, -110%) scale(0.5);
+    opacity: 0;
+  }
+}
+
+@keyframes glowBurst {
+
+  0%,
+  80% {
+    transform: translate(-50%, -50%) scale(0);
+    opacity: 0;
+  }
+
+  86% {
+    transform: translate(-50%, -50%) scale(1.6);
+    opacity: 0.9;
+  }
+
+  100% {
+    transform: translate(-50%, -50%) scale(2.2);
+    opacity: 0;
+  }
+}
+
+/* Individual placement, size, timing & drift variation */
+.bubble:nth-child(1) {
+  left: 2%;
+  width: 165px;
+  height: 165px;
+  --dur: 17s;
+  --delay: 0s;
+  --drift: 22px;
+}
+
+.bubble:nth-child(2) {
+  left: 9%;
+  width: 210px;
+  height: 210px;
+  --dur: 21s;
+  --delay: 2.4s;
+  --drift: -28px;
+}
+
+.bubble:nth-child(3) {
+  left: 16%;
+  width: 146px;
+  height: 146px;
+  --dur: 14s;
+  --delay: 5.1s;
+  --drift: 18px;
+}
+
+.bubble:nth-child(4) {
+  left: 24%;
+  width: 224px;
+  height: 224px;
+  --dur: 19s;
+  --delay: 0.8s;
+  --drift: -22px;
+}
+
+.bubble:nth-child(5) {
+  left: 32%;
+  width: 157px;
+  height: 157px;
+  --dur: 15.5s;
+  --delay: 4s;
+  --drift: 26px;
+}
+
+.bubble:nth-child(6) {
+  left: 40%;
+  width: 196px;
+  height: 196px;
+  --dur: 20s;
+  --delay: 6.5s;
+  --drift: -18px;
+}
+
+.bubble:nth-child(7) {
+  left: 48%;
+  width: 134px;
+  height: 134px;
+  --dur: 13s;
+  --delay: 1.5s;
+  --drift: 20px;
+}
+
+.bubble:nth-child(8) {
+  left: 56%;
+  width: 185px;
+  height: 185px;
+  --dur: 18s;
+  --delay: 3.2s;
+  --drift: -26px;
+}
+
+.bubble:nth-child(9) {
+  left: 64%;
+  width: 151px;
+  height: 151px;
+  --dur: 16s;
+  --delay: 7.2s;
+  --drift: 24px;
+}
+
+.bubble:nth-child(10) {
+  left: 72%;
+  width: 218px;
+  height: 218px;
+  --dur: 22s;
+  --delay: 1s;
+  --drift: -20px;
+}
+
+.bubble:nth-child(11) {
+  left: 80%;
+  width: 140px;
+  height: 140px;
+  --dur: 14.5s;
+  --delay: 5.8s;
+  --drift: 16px;
+}
+
+.bubble:nth-child(12) {
+  left: 87%;
+  width: 179px;
+  height: 179px;
+  --dur: 19.5s;
+  --delay: 2.9s;
+  --drift: -24px;
+}
+
+.bubble:nth-child(13) {
+  left: 93%;
+  width: 129px;
+  height: 129px;
+  --dur: 13.5s;
+  --delay: 6s;
+  --drift: 22px;
+}
+
+.bubble:nth-child(14) {
+  left: 97%;
+  width: 168px;
+  height: 168px;
+  --dur: 20.5s;
+  --delay: 4.6s;
+  --drift: -18px;
+}
+
+/* Responsive tweaks */
+@media (max-width: 480px) {
+  .bubble {
+    width: 118px !important;
+    height: 118px !important;
+  }
+
+  .bubble::after {
+    font-size: 34px;
+  }
+}
+
+.redirect-link {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  margin-top: 24px;
+  padding: 14px 26px;
+  font-size: 14px;
+  font-weight: 600;
+  letter-spacing: 0.02em;
+  color: #fff;
+  background: linear-gradient(135deg, #ff6f91 0%, #d6336c 50%, #a3226e 100%);
+  background-size: 200% 200%;
+  border: none;
+  border-radius: 999px;
+  cursor: pointer;
+  box-shadow:
+    0 10px 25px rgba(163, 34, 110, 0.35),
+    0 2px 8px rgba(163, 34, 110, 0.25);
+  animation: gradientShift 4s ease infinite, softPulse 2.4s ease-in-out infinite;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+  overflow: hidden;
+}
+
+.redirect-link::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -75%;
+  width: 50%;
+  height: 100%;
+  background: linear-gradient(
+    120deg,
+    transparent 0%,
+    rgba(255, 255, 255, 0.35) 50%,
+    transparent 100%
+  );
+  transform: skewX(-20deg);
+  animation: shimmer 3.2s ease-in-out infinite;
+}
+
+.redirect-link:hover {
+  transform: translateY(-2px) scale(1.02);
+  box-shadow:
+    0 14px 32px rgba(163, 34, 110, 0.45),
+    0 4px 10px rgba(163, 34, 110, 0.3);
+}
+
+.redirect-link:active {
+  transform: translateY(0) scale(0.98);
+}
+
+@keyframes gradientShift {
+  0%, 100% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+}
+
+@keyframes shimmer {
+  0% { left: -75%; }
+  100% { left: 125%; }
+}
+
+@keyframes softPulse {
+  0%, 100% {
+    box-shadow:
+      0 10px 25px rgba(163, 34, 110, 0.35),
+      0 2px 8px rgba(163, 34, 110, 0.25);
+  }
+  50% {
+    box-shadow:
+      0 10px 30px rgba(214, 51, 108, 0.55),
+      0 2px 10px rgba(214, 51, 108, 0.4);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .redirect-link,
+  .redirect-link::before {
+    animation: none;
+  }
+}
+
+.card-close-btn {
+  position: absolute;
+  top: 14px;
+  right: 14px;
+  width: 34px;
+  height: 34px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(107, 30, 60, 0.08);
+  border: none;
+  border-radius: 50%;
+  color: #6b1e3c;
+  cursor: pointer;
+  transition: background 0.2s ease, transform 0.15s ease, color 0.2s ease;
+  z-index: 5;
+}
+
+.card-close-btn svg {
+  width: 16px;
+  height: 16px;
+}
+
+.card-close-btn:hover {
+  background: rgba(214, 51, 108, 0.15);
+  color: #d6336c;
+  transform: rotate(90deg);
+}
+
+.card-close-btn:active {
+  transform: rotate(90deg) scale(0.92);
+}

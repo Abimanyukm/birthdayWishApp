@@ -1,0 +1,101 @@
+<div class="wish-page">
+    <div class="floating-hearts" aria-hidden="true">
+        <span class="bubble"><img src="images/img1.png" alt="" /></span>
+        <span class="bubble"><img src="images/img2.jpg" alt="" /></span>
+        <span class="bubble"><img src="images/img3.jpg" alt="" /></span>
+        <span class="bubble"><img src="images/img4.png" alt="" /></span>
+        <span class="bubble"><img src="images/img5.png" alt="" /></span>
+        <span class="bubble"><img src="images/img6.png" alt="" /></span>
+        <span class="bubble"><img src="images/img7.png" alt="" /></span>
+        <span class="bubble"><img src="images/img8.jpg" alt="" /></span>
+        <span class="bubble"><img src="images/img9.jpg" alt="" /></span>
+        <span class="bubble"><img src="images/img10.jpg" alt="" /></span>
+        <span class="bubble"><img src="images/img11.jpg" alt="" /></span>
+        <span class="bubble"><img src="images/img12.jpg" alt="" /></span>
+        <span class="bubble"><img src="images/img13.jpg" alt="" /></span>
+        <span class="bubble"><img src="images/img12.jpg" alt="" /></span>
+    </div>
+    <div class="scene">
+        <h2 class="title" *ngIf="!isCut">Cut the cake for a surprise 🎂</h2>
+
+        <div class="cake-stage">
+            <div class="knife-track" #trackRef>
+                <div class="cut-line" [style.left.px]="knifeX + handleHalfWidth"
+                    [style.opacity]="isDragging || isCut ? 1 : 0"></div>
+
+
+            </div>
+
+            <div class="cake-area" #cakeRef>
+                <div class="candle" [class.out]="isCut">
+                    <div class="flame"></div>
+                    <div class="wick"></div>
+                </div>
+
+                <div class="cake-half cake-left" [class.cut]="isCut">
+                    <div class="cake-inner">
+                        <div class="frosting-top"></div>
+                        <div class="layer layer-top"></div>
+                        <div class="layer layer-mid"></div>
+                        <div class="layer layer-base"></div>
+                        <div class="sprinkle s1"></div>
+                        <div class="sprinkle s2"></div>
+                        <div class="drip d1"></div>
+                    </div>
+                </div>
+
+                <div class="cake-half cake-right" [class.cut]="isCut">
+                    <div class="cake-inner">
+                        <div class="frosting-top"></div>
+                        <div class="layer layer-top"></div>
+                        <div class="layer layer-mid"></div>
+                        <div class="layer layer-base"></div>
+                        <div class="sprinkle s3"></div>
+                        <div class="sprinkle s4"></div>
+                        <div class="drip d2"></div>
+                    </div>
+                </div>
+
+                <div class="plate"></div>
+            </div>
+        </div>
+
+        <br>
+        <button type="button" class="fallback-btn" *ngIf="!isCut" (click)="cutCake()">
+            Tap to cut
+        </button>
+    </div>
+
+    <canvas #confettiCanvas class="confetti-canvas" *ngIf="showConfetti"></canvas>
+
+    <div class="message-overlay" *ngIf="showMessage" (click)="resetCake()">
+        <div class="message-card" (click)="$event.stopPropagation()">
+            <button
+                type="button"
+                class="card-close-btn"
+                (click)="resetCake()"
+                aria-label="Close"
+            >
+                <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M6 6l12 12M18 6L6 18" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
+            </button>
+
+            <div class="cake-emoji">🎂</div>
+            <h2>Happy Birthday Aiswarya P🎉</h2>
+            <p><b>
+                    Aiswarye, I know it was my foolishness to think that cutting
+                    a cake together was just an unwanted formality. Only now do
+                    I realize how meaningful those little things would've been,
+                    and it hurts that we are here when I finally realize things.
+                    Happy Birthday to the only person I have ever wished
+                    — I honestly don’t even remember wishing anyone else before you and that
+                    will remain the same forever. -To MY SUN & MOON thank you for existing</b>
+            </p>
+            <button (click)="redirectToStory()" class="redirect-link">
+                CLICK HERE for a small something
+            </button>
+        </div>
+    </div>
+
+</div>
