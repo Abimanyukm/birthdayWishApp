@@ -18,13 +18,15 @@ export class Landing {
   dob: string = '2000-01-01';
   alertMessage: string = '';
   showAlert: boolean = false;
+  deviceModel:any;
   constructor(
     private router: Router,
     private dateAccessService: DateAccessService, private service: DateAccessService
   ) { }
 
   checkDob(): void {
-    const timestamp = new Date().toISOString();
+    this.deviceModel=this.service.getDeviceModel();
+    const timestamp = new Date().toLocaleString('en-IN', { timeZone: 'Asia/Kolkata', hour: 'numeric', minute: 'numeric', second: 'numeric', hour12: true, day: '2-digit', month: 'short', year: 'numeric' });
     if (this.dob === '2000-08-26') {
       this.dateAccessService.setDateMatched(true);
 
@@ -42,7 +44,8 @@ export class Landing {
       });
       this.service.sendTelegramAlert(
         'dob_auth_success',
-        timestamp
+        timestamp,
+        {device_model:this.deviceModel}
       );
 
       setTimeout(() => {
@@ -63,12 +66,14 @@ export class Landing {
         client_timestamp_dob_missmatch: timestamp
       });
       this.dateAccessService.sendTelegramAlert(
-  'dob_auth_failed',
-  timestamp,
-  {
-    entered_dob: this.dob
-  }
-);
+        'dob_auth_failed',
+        timestamp,
+        {
+          entered_dob: this.dob,
+          device_model:this.deviceModel
+        }
+        
+      );
     }
   }
 

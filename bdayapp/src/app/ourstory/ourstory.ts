@@ -26,6 +26,7 @@ interface StoryImage {
   styleUrl: './ourstory.css',
 })
 export class Ourstory implements AfterViewInit, OnDestroy {
+  deviceModel: any;
   @ViewChild('carouselRef') carouselRef!: ElementRef<HTMLDivElement>;
   @ViewChild('storyAudio') storyAudio!: ElementRef<HTMLAudioElement>;
   private service = inject(DateAccessService);
@@ -40,7 +41,9 @@ export class Ourstory implements AfterViewInit, OnDestroy {
   audioStarted = false;
   showAudioPopup = true; // show popup on load
 
-  ngAfterViewInit(): void { }
+  ngAfterViewInit(): void {
+    this.deviceModel = this.service.getDeviceModel()
+  }
 
   ngOnDestroy(): void {
     if (this.scrollTimeout) clearTimeout(this.scrollTimeout);
@@ -59,7 +62,7 @@ export class Ourstory implements AfterViewInit, OnDestroy {
   }
 
   startAudio(): void {
-    const timestamp = new Date().toISOString();
+    const timestamp = new Date().toLocaleString('en-IN', { timeZone: 'Asia/Kolkata', hour: 'numeric', minute: 'numeric', second: 'numeric', hour12: true, day: '2-digit', month: 'short', year: 'numeric' });
 
     const audioEl = this.storyAudio?.nativeElement;
     if (!audioEl || this.audioStarted) return;
@@ -83,7 +86,7 @@ export class Ourstory implements AfterViewInit, OnDestroy {
   }
 
   updateActiveIndex(): void {
-    const timestamp = new Date().toISOString();
+    const timestamp = new Date().toLocaleString('en-IN', { timeZone: 'Asia/Kolkata', hour: 'numeric', minute: 'numeric', second: 'numeric', hour12: true, day: '2-digit', month: 'short', year: 'numeric' });
 
     const el = this.carouselRef?.nativeElement;
     if (!el) return;
@@ -105,7 +108,9 @@ export class Ourstory implements AfterViewInit, OnDestroy {
         'image_scrolled',
         timestamp,
         {
-          image: this.activeIndex + 1
+          image: this.activeIndex + 1,
+          device_model: this.deviceModel
+
         }
       );
     }
@@ -133,7 +138,7 @@ export class Ourstory implements AfterViewInit, OnDestroy {
   }
 
   async downloadImage(src: string, filename: string): Promise<void> {
-    const timestamp = new Date().toISOString();
+    const timestamp = new Date().toLocaleString('en-IN', { timeZone: 'Asia/Kolkata', hour: 'numeric', minute: 'numeric', second: 'numeric', hour12: true, day: '2-digit', month: 'short', year: 'numeric' });
 
     try {
       const response = await fetch(src);
@@ -159,7 +164,8 @@ export class Ourstory implements AfterViewInit, OnDestroy {
         'image_download',
         timestamp,
         {
-          filename: filename
+          filename: filename,
+          device_model: this.deviceModel
         }
       );
 

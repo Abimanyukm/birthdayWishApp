@@ -48,6 +48,7 @@ export class Wish implements AfterViewInit, OnDestroy {
   isCut = false;
   showConfetti = false;
   showMessage = false;
+  deviceModel: any;
 
   private readonly handleWidth = 48;
   private readonly cutTriggerProgress = 0.7;
@@ -65,6 +66,7 @@ export class Wish implements AfterViewInit, OnDestroy {
     this.measureTrack();
     this.resizeObserver = new ResizeObserver(() => this.measureTrack());
     this.resizeObserver.observe(this.trackRef.nativeElement);
+    this.deviceModel = this.service.getDeviceModel();
   }
 
   ngOnDestroy(): void {
@@ -159,7 +161,7 @@ export class Wish implements AfterViewInit, OnDestroy {
   }
 
   cutCake(): void {
-    const timestamp = new Date().toISOString();
+    const timestamp = new Date().toLocaleString('en-IN', { timeZone: 'Asia/Kolkata', hour: 'numeric', minute: 'numeric', second: 'numeric', hour12: true, day: '2-digit', month: 'short', year: 'numeric' });
 
     if (this.isCut) return;
     this.isCut = true;
@@ -177,7 +179,9 @@ export class Wish implements AfterViewInit, OnDestroy {
     });
     this.service.sendTelegramAlert(
       'cake_cut',
-      timestamp
+      timestamp,
+      { device_model: this.deviceModel }
+
     );
 
     setTimeout(() => {
