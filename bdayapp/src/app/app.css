@@ -1,0 +1,4 @@
+.seo-hidden {
+  position: absolute;
+  left: -9999px; /* off-screen but still visible to crawlers */
+}

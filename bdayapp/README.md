@@ -3,7 +3,7 @@
 A mobile‑friendly interactive birthday webpage built with Angular and deployed via GitHub Pages.
 
 ## 🚀 Live Site
-👉 [https://abimanyukm.github.io/forAiswaryaByAbimanyu/](https://abimanyukm.github.io/forAiswaryaByAbimanyu/)
+[For Aiswarya From Abimanyu ❤️](https://abimanyukm.github.io/forAiswaryaByAbimanyu/)
 
 ## 📂 Project Overview
 - Built using Angular
