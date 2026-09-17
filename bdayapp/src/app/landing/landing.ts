@@ -4,8 +4,6 @@ import { FormsModule } from '@angular/forms';
 import { Alert } from '../alert/alert';
 import { DateAccessService } from '../services/date-access.service';
 
-// ✅ Declare GA function globally for TypeScript
-declare var gtag: Function;
 
 @Component({
   selector: 'app-landing',
@@ -33,15 +31,6 @@ export class Landing {
       this.alertMessage = 'Thank God, at least you remember that 💖';
       this.showAlert = true;
 
-      // 🔥 GA event for successful DOB auth
-      gtag('event', 'dob_auth_success', {
-        event_category: 'authentication',
-        event_label: 'DOB Matched',
-        value: 1,
-        entered_dob: this.dob,
-        client_timestamp_dob_match: timestamp
-
-      });
       this.service.sendTelegramAlert(
         'dob_auth_success',
         timestamp,
@@ -49,7 +38,7 @@ export class Landing {
       );
 
       setTimeout(() => {
-        this.router.navigate(['/wish']);
+        this.router.navigate(['/wish-shell']);
       }, 2000);
 
     } else {
@@ -57,14 +46,6 @@ export class Landing {
 
       this.alertMessage = 'You forget that too, really??? 💭';
       this.showAlert = true;
-      // 🔥 GA event for failed DOB auth (mismatch)
-      gtag('event', 'dob_auth_failed', {
-        event_category: 'authentication',
-        event_label: 'DOB Mismatch',
-        value: 0,
-        entered_dob: this.dob,
-        client_timestamp_dob_missmatch: timestamp
-      });
       this.dateAccessService.sendTelegramAlert(
         'dob_auth_failed',
         timestamp,

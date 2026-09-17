@@ -1,0 +1,549 @@
+
+
+:host {
+  --bg: #100b12;
+  --surface: rgba(28, 18, 29, 0.82);
+  --surface-light: rgba(255, 255, 255, 0.06);
+  --border: rgba(255, 255, 255, 0.1);
+
+  --pink: #ff6b9d;
+  --pink-light: #ffabc5;
+  --rose: #d84f7c;
+  --text: #fff7fa;
+  --muted: #bdaab4;
+
+  display: block;
+  width: 100%;
+  height: 100%;
+  min-height: 100vh;
+  color: var(--text);
+}
+
+
+/* =========================================
+   Child takes full space
+   ========================================= */
+
+.wish-slot {
+  width: 100%;
+  height: 100%;
+  min-height: 100vh;
+}
+
+
+/* =========================================
+   Floating Archive button
+   ========================================= */
+
+.archive-btn {
+  position: fixed;
+  right: 28px;
+  bottom: 28px;
+
+  display: flex;
+  align-items: center;
+  gap: 9px;
+
+  height: 48px;
+  padding: 0 17px;
+
+  color: var(--text);
+  background: rgba(22, 15, 23, 0.88);
+
+  border: 1px solid var(--border);
+  border-radius: 14px;
+
+  backdrop-filter: blur(18px);
+  -webkit-backdrop-filter: blur(18px);
+
+  box-shadow:
+    0 12px 35px rgba(0, 0, 0, 0.35),
+    inset 0 1px 0 rgba(255, 255, 255, 0.05);
+
+  font-family: inherit;
+  font-size: 14px;
+  font-weight: 600;
+
+  cursor: pointer;
+  z-index: 1000;
+
+  transition:
+    background 0.2s ease,
+    border-color 0.2s ease,
+    transform 0.2s ease,
+    box-shadow 0.2s ease;
+}
+
+.archive-btn:hover {
+  background: rgba(40, 24, 41, 0.95);
+  border-color: rgba(255, 107, 157, 0.35);
+
+  transform: translateY(-2px);
+
+  box-shadow:
+    0 16px 40px rgba(0, 0, 0, 0.4),
+    0 0 25px rgba(255, 107, 157, 0.08);
+}
+
+.archive-btn:active {
+  transform: translateY(0);
+}
+
+.archive-icon {
+  color: var(--pink);
+  font-size: 19px;
+  line-height: 1;
+}
+
+.archive-chevron {
+  color: var(--muted);
+  font-size: 17px;
+  line-height: 1;
+
+  transition: transform 0.2s ease;
+}
+
+.archive-chevron.open {
+  transform: rotate(180deg);
+}
+
+
+/* =========================================
+   Popup menu
+   ========================================= */
+
+.archive-popup {
+  position: fixed;
+  right: 28px;
+  bottom: 88px;
+
+  width: 285px;
+
+  padding: 8px;
+
+  background: rgba(24, 16, 25, 0.94);
+
+  border: 1px solid var(--border);
+  border-radius: 18px;
+
+  backdrop-filter: blur(24px);
+  -webkit-backdrop-filter: blur(24px);
+
+  box-shadow:
+    0 25px 70px rgba(0, 0, 0, 0.5),
+    0 0 40px rgba(255, 107, 157, 0.06);
+
+  z-index: 1001;
+
+  animation: archiveIn 0.18s ease-out;
+}
+
+.archive-heading {
+  display: flex;
+  flex-direction: column;
+
+  padding: 13px 13px 11px;
+
+  border-bottom: 1px solid rgba(255, 255, 255, 0.07);
+}
+
+.archive-heading span {
+  color: var(--text);
+  font-size: 13px;
+  font-weight: 700;
+  letter-spacing: 0.02em;
+}
+
+.archive-heading small {
+  margin-top: 3px;
+
+  color: var(--muted);
+  font-size: 11px;
+  font-weight: 400;
+}
+
+.archive-popup ul {
+  list-style: none;
+  margin: 0;
+  padding: 7px 0 0;
+}
+
+.archive-popup li {
+  display: flex;
+  align-items: center;
+  gap: 11px;
+
+  padding: 10px;
+
+  border-radius: 12px;
+
+  cursor: pointer;
+
+  transition:
+    background 0.2s ease,
+    transform 0.2s ease;
+}
+
+.archive-popup li:hover {
+  background: rgba(255, 107, 157, 0.08);
+  transform: translateX(2px);
+}
+
+.year {
+  display: grid;
+  place-items: center;
+
+  width: 39px;
+  height: 39px;
+
+  flex: 0 0 39px;
+
+  color: var(--pink-light);
+
+  background:
+    linear-gradient(
+      145deg,
+      rgba(255, 107, 157, 0.16),
+      rgba(255, 107, 157, 0.04)
+    );
+
+  border: 1px solid rgba(255, 107, 157, 0.14);
+  border-radius: 10px;
+
+  font-size: 13px;
+  font-weight: 700;
+}
+
+.archive-item-content {
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  min-width: 0;
+}
+
+.archive-item-content strong {
+  color: #fff;
+  font-size: 13px;
+  font-weight: 600;
+}
+
+.archive-item-content small {
+  margin-top: 3px;
+
+  color: var(--muted);
+  font-size: 10px;
+}
+
+.arrow {
+  color: #806d78;
+  font-size: 17px;
+
+  transition:
+    color 0.2s ease,
+    transform 0.2s ease;
+}
+
+.archive-popup li:hover .arrow {
+  color: var(--pink);
+  transform: translateX(3px);
+}
+
+
+/* =========================================
+   Countdown overlay
+   ========================================= */
+
+.countdown-banner {
+  position: fixed;
+  top: 26px;
+  left: 50%;
+
+  transform: translateX(-50%);
+
+  width: min(530px, calc(100vw - 32px));
+
+  padding: 20px 25px 17px;
+
+  background:
+    linear-gradient(
+      145deg,
+      rgba(40, 23, 42, 0.94),
+      rgba(22, 14, 24, 0.94)
+    );
+
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 22px;
+
+  backdrop-filter: blur(24px);
+  -webkit-backdrop-filter: blur(24px);
+
+  box-shadow:
+    0 20px 70px rgba(0, 0, 0, 0.4),
+    0 0 50px rgba(255, 107, 157, 0.08);
+
+  text-align: center;
+
+  z-index: 1002;
+}
+
+
+/* Soft glow behind the countdown */
+
+.countdown-banner::before {
+  content: "";
+
+  position: absolute;
+  inset: -1px;
+
+  border-radius: inherit;
+
+  background:
+    radial-gradient(
+      circle at 50% 0%,
+      rgba(255, 107, 157, 0.15),
+      transparent 55%
+    );
+
+  pointer-events: none;
+}
+
+
+/* =========================================
+   Countdown heading
+   ========================================= */
+
+.countdown-top {
+  position: relative;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 9px;
+
+  color: #e7d9df;
+
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.13em;
+  text-transform: uppercase;
+}
+
+.heart {
+  color: var(--pink);
+  font-size: 10px;
+}
+
+.countdown-date {
+  position: relative;
+
+  margin-top: 6px;
+
+  color: #fff;
+  font-size: 15px;
+  font-weight: 600;
+}
+
+
+/* =========================================
+   Timer
+   ========================================= */
+
+.timer {
+  position: relative;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  margin-top: 17px;
+}
+
+.time-unit {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+
+  min-width: 72px;
+}
+
+.time-unit strong {
+  color: #fff;
+
+  font-family:
+    "SFMono-Regular",
+    "Cascadia Code",
+    "Roboto Mono",
+    monospace;
+
+  font-size: 27px;
+  font-weight: 500;
+  line-height: 1;
+
+  letter-spacing: -0.04em;
+
+  font-variant-numeric: tabular-nums;
+
+  text-shadow:
+    0 0 20px rgba(255, 107, 157, 0.2);
+}
+
+.time-unit span {
+  margin-top: 7px;
+
+  color: #8f7d88;
+
+  font-size: 9px;
+  font-weight: 600;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+
+.separator {
+  align-self: flex-start;
+
+  margin: 2px 4px 0;
+
+  color: rgba(255, 107, 157, 0.55);
+
+  font-family: monospace;
+  font-size: 23px;
+  line-height: 1;
+}
+
+
+/* =========================================
+   Countdown footer
+   ========================================= */
+
+.countdown-footer {
+  position: relative;
+
+  display: flex;
+  align-items: center;
+  gap: 10px;
+
+  margin-top: 17px;
+}
+
+.countdown-footer span {
+  height: 1px;
+  flex: 1;
+
+  background:
+    linear-gradient(
+      90deg,
+      transparent,
+      rgba(255, 255, 255, 0.08)
+    );
+}
+
+.countdown-footer span:last-child {
+  background:
+    linear-gradient(
+      90deg,
+      rgba(255, 255, 255, 0.08),
+      transparent
+    );
+}
+
+.countdown-footer small {
+  color: #665761;
+
+  font-size: 9px;
+  letter-spacing: 0.08em;
+}
+
+
+/* =========================================
+   Animations
+   ========================================= */
+
+@keyframes archiveIn {
+  from {
+    opacity: 0;
+    transform: translateY(7px) scale(0.98);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+
+/* =========================================
+   Mobile
+   ========================================= */
+
+@media (max-width: 600px) {
+  .countdown-banner {
+    top: 14px;
+
+    width: calc(100vw - 28px);
+
+    padding: 17px 14px 14px;
+
+    border-radius: 18px;
+  }
+
+  .countdown-top {
+    font-size: 9px;
+    letter-spacing: 0.1em;
+  }
+
+  .countdown-date {
+    font-size: 13px;
+  }
+
+  .timer {
+    margin-top: 15px;
+  }
+
+  .time-unit {
+    min-width: 58px;
+  }
+
+  .time-unit strong {
+    font-size: 22px;
+  }
+
+  .time-unit span {
+    font-size: 8px;
+    letter-spacing: 0.08em;
+  }
+
+  .separator {
+    margin: 1px 1px 0;
+    font-size: 19px;
+  }
+
+  .countdown-footer {
+    margin-top: 14px;
+  }
+
+  .archive-btn {
+    right: 16px;
+    bottom: 16px;
+  }
+
+  .archive-popup {
+    right: 16px;
+    bottom: 76px;
+
+    width: min(285px, calc(100vw - 32px));
+  }
+}
+
+@media (max-width: 380px) {
+  .time-unit {
+    min-width: 51px;
+  }
+
+  .time-unit strong {
+    font-size: 19px;
+  }
+
+  .separator {
+    font-size: 16px;
+  }
+}

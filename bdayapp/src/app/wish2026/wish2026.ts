@@ -10,7 +10,6 @@ import {
 import { CommonModule } from '@angular/common';
 import { Router } from '@angular/router';
 import { DateAccessService } from '../services/date-access.service';
-declare var gtag: Function;
 interface ConfettiParticle {
   x: number;
   y: number;
@@ -24,12 +23,12 @@ interface ConfettiParticle {
 }
 
 @Component({
-  selector: 'app-wish',
+  selector: 'app-wish2026',
   imports: [CommonModule],
-  templateUrl: './wish.html',
-  styleUrl: './wish.css',
+  templateUrl: './wish2026.html',
+  styleUrl: './wish2026.css',
 })
-export class Wish implements AfterViewInit, OnDestroy {
+export class Wish2026 implements AfterViewInit, OnDestroy {
 
   @ViewChild('trackRef') trackRef!: ElementRef<HTMLDivElement>;
   @ViewChild('knifeRef') knifeRef!: ElementRef<HTMLDivElement>;
@@ -170,13 +169,6 @@ export class Wish implements AfterViewInit, OnDestroy {
     this.showConfetti = true;
     this.showMessage = true;
 
-    // 🔥 GA event when cake is cut
-    gtag('event', 'cake_cut', {
-      event_category: 'interaction',
-      event_label: 'Cake Cut Triggered',
-      value: 1,
-      cake_cut_time: timestamp
-    });
     this.service.sendTelegramAlert(
       'cake_cut',
       timestamp,

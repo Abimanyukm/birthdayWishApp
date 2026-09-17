@@ -1,17 +1,17 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { Wish } from './wish';
+import { WishShell } from './wish-shell';
 
-describe('Wish', () => {
-  let component: Wish;
-  let fixture: ComponentFixture<Wish>;
+describe('WishShell', () => {
+  let component: WishShell;
+  let fixture: ComponentFixture<WishShell>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [Wish],
+      imports: [WishShell],
     }).compileComponents();
 
-    fixture = TestBed.createComponent(Wish);
+    fixture = TestBed.createComponent(WishShell);
     component = fixture.componentInstance;
     await fixture.whenStable();
   });

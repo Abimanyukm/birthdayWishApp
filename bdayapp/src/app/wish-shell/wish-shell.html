@@ -1,0 +1,82 @@
+<!-- Child takes full space -->
+<div class="wish-slot">
+  <!-- <app-wish2026></app-wish2026> -->
+</div>
+
+<!-- Floating Archive button -->
+<button
+  class="archive-btn"
+  type="button"
+  (click)="toggleArchive()"
+  [attr.aria-expanded]="archiveOpen"
+>
+  <span class="archive-icon">♡</span>
+  <span>Archives</span>
+  <span class="archive-chevron" [class.open]="archiveOpen">⌄</span>
+</button>
+
+<!-- Popup menu -->
+<div class="archive-popup" *ngIf="archiveOpen">
+  <div class="archive-heading">
+    <span>Birthday Archives</span>
+  </div>
+
+  <ul>
+    <li (click)="goToYear(2026)">
+      <span class="year">26</span>
+
+      <span class="archive-item-content">
+        <strong>26th Birthday</strong>
+        <small>September 15, 2026</small>
+      </span>
+
+      <span class="arrow">→</span>
+    </li>
+
+    
+  </ul>
+</div>
+
+<!-- Countdown overlay -->
+<div class="countdown-banner">
+  <div class="countdown-top">
+    <span class="heart">♥</span>
+    <span>Until your next birthday</span>
+    <span class="heart">♥</span>
+  </div>
+
+
+  <div class="timer" aria-live="polite">
+    <div class="time-unit">
+      <strong>{{ countdown().days }}</strong>
+      <span>Days</span>
+    </div>
+
+    <div class="separator">:</div>
+
+    <div class="time-unit">
+      <strong>{{ countdown().hours }}</strong>
+      <span>Hours</span>
+    </div>
+
+    <div class="separator">:</div>
+
+    <div class="time-unit">
+      <strong>{{ countdown().minutes }}</strong>
+      <span>Minutes</span>
+    </div>
+
+    <div class="separator">:</div>
+
+    <div class="time-unit">
+      <strong>{{ countdown().seconds }}</strong>
+      <span>Seconds</span>
+    </div>
+  </div>
+
+  <div class="countdown-footer">
+    <span></span>
+    <small>Counting every second</small>
+    <span></span>
+  </div>
+</div>

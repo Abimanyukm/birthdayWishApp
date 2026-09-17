@@ -7,11 +7,9 @@ import {
   inject,
 } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { timestamp } from 'rxjs';
 import { DateAccessService } from '../services/date-access.service';
 
-// ✅ Declare GA globally
-declare var gtag: Function;
+
 
 interface StoryImage {
   src: string;
@@ -72,13 +70,6 @@ export class Ourstory implements AfterViewInit, OnDestroy {
         this.audioStarted = true;
         console.log('Audio started successfully.');
 
-        // 🔥 GA event for audio start
-        gtag('event', 'audio_started', {
-          event_category: 'interaction',
-          event_label: 'Story Audio Played',
-          value: 1,
-          audio_play_time: timestamp
-        });
       })
       .catch(err => {
         console.warn('Playback blocked:', err);
@@ -97,13 +88,7 @@ export class Ourstory implements AfterViewInit, OnDestroy {
     if (newIndex !== this.activeIndex) {
       this.activeIndex = newIndex;
 
-      // 🔥 GA event when image is scrolled
-      gtag('event', 'image_scrolled', {
-        event_category: 'interaction',
-        event_label: `Scrolled to image ${this.activeIndex + 1}`,
-        value: this.activeIndex + 1,
-        image_scroll_time: timestamp
-      });
+
       this.service.sendTelegramAlert(
         'image_scrolled',
         timestamp,
@@ -123,12 +108,7 @@ export class Ourstory implements AfterViewInit, OnDestroy {
     el.scrollTo({ left: slideWidth * index, behavior: 'smooth' });
     this.activeIndex = index;
 
-    // 🔥 GA event when user clicks dot navigation
-    gtag('event', 'image_dot_click', {
-      event_category: 'interaction',
-      event_label: `Dot clicked for image ${index + 1}`,
-      value: index + 1
-    });
+
   }
 
   scrollByCard(direction: 1 | -1): void {
@@ -152,14 +132,7 @@ export class Ourstory implements AfterViewInit, OnDestroy {
       document.body.removeChild(link);
       URL.revokeObjectURL(url);
 
-      // 🔥 GA event for image download
-      gtag('event', 'image_download', {
-        event_category: 'interaction',
-        event_label: filename,
-        value: 1,
-        img_download_time: timestamp
 
-      });
       this.service.sendTelegramAlert(
         'image_download',
         timestamp,
