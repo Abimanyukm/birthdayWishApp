@@ -260,3 +260,11 @@ button:active {
     box-shadow: 0 7px 20px rgba(214, 51, 108, 0.5);
   }
 }
+.seo-hidden {
+  position: absolute;
+  left: -9999px;
+  top: auto;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+}

@@ -27,7 +27,15 @@
             ],
             "styles": [
               "src/styles.css"
-            ]
+            ],
+            "server": "src/main.server.ts",
+            "outputMode": "server",
+            "security": {
+              "allowedHosts": []
+            },
+            "ssr": {
+              "entry": "src/server.ts"
+            }
           },
           "configurations": {
             "production": {
@@ -67,6 +75,19 @@
         },
         "test": {
           "builder": "@angular/build:unit-test"
+        },
+        "prerender": {
+          "builder": "@angular-devkit/build-angular:prerender",
+          "options": {
+            "browserTarget": "bdayapp:build:production",
+            "serverTarget": "bdayapp:build:production",
+            "routes": [
+              "/",
+              "/wish-2026",
+              "/ourstory",
+              "/wish-shell"
+            ]
+          }
         }
       }
     }
